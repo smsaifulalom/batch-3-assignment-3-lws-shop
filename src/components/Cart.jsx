@@ -8,9 +8,9 @@ export default function Cart() {
 
   function removeFromCart(productId) {
     dispatch({
-    type: "REMOVE_FROM_CART",
-    payload: productId
-   })
+      type: "REMOVE_FROM_CART",
+      payload: productId,
+    });
   }
   function updateQty(productId, newQty) {
     if (newQty < 1) return;
@@ -19,9 +19,10 @@ export default function Cart() {
     dispatch({
       type: "UPDATE_QUANTITY",
       payload: {
-        id: productId, quantity: newQty
-      }
-    })
+        id: productId,
+        quantity: newQty,
+      },
+    });
   }
   return (
     <div className="lg:col-span-1">
@@ -50,7 +51,7 @@ export default function Cart() {
                 </span>
               </div>
               <p className="text-sm text-gray-500">Size: {product.size}</p>
-              <p className="text-sm text-gray-500">Color: {product.color}</p>
+              <p className="text-sm text-gray-500">Color: {product.Color}</p>
               <div className="flex justify-between items-center mt-2">
                 <p className="font-bold">${product.price}</p>
                 <div className="flex items-center space-x-2">
@@ -76,7 +77,6 @@ export default function Cart() {
             </div>
           </div>
         ))}
-
 
         <OrderSummary />
       </div>
