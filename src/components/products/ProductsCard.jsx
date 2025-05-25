@@ -4,32 +4,25 @@ import Rating from "./Rating";
 import { getProductUrl } from "/src/utils/product-utility.js";
 
 export default function ProductsCard({ product }) {
-  const { cartData, setCartData } = useContext(ProductContext);
+  const { state, dispatch } = useContext(ProductContext);
+  const { cartData } = state;
 
   const isInCart = cartData.some((item) => item.id === product.id);
   const cartItem = cartData.find((item) => item.id === product.id);
   const stockManage = product.stock - (cartItem?.quantity || 0);
 
   const handleAddtoCart = (product) => {
-    const existingItem = cartData.find((item) => item.id === product.id);
-    if (existingItem) {
-      setCartData(
-        cartData.map((item) =>
-          item.id === product.id
-            ? {
-                ...item,
-                quantity: item.quantity + 1,
-              }
-            : item
-        )
-      );
-    } else {
-      setCartData([...cartData, { ...product, quantity: 1 }]);
-    }
+    dispatch({
+      type: "ADD_TO_CART",
+      payload: product,
+    });
   };
 
   function handleRemoveFromCart(productId) {
-    setCartData(cartData.filter((p) => p.id !== productId));
+    dispatch({
+      type: "REMOVE_FROM_CART",
+      payload: productId,
+    });
   }
 
   return (

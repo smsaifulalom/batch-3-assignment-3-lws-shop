@@ -2,15 +2,15 @@ import { useContext } from "react";
 import { ProductContext } from "/src/context";
 
 export default function OrderSummary() {
-  const { cartData } = useContext(ProductContext);
+  const { state } = useContext(ProductContext);
 
-  const subTotal = cartData.reduce((total, item) => {
+  const subTotal = state.cartData.reduce((total, item) => {
     return total + item.price * (item.quantity || 1);
   }, 0);
 
   const discount = subTotal * 0.2;
 
-  const deliveryFee = cartData.length > 0 ? 15 : 0;
+  const deliveryFee = state.cartData.length > 0 ? 15 : 0;
 
   const total = subTotal - discount + deliveryFee;
   return (
@@ -26,7 +26,7 @@ export default function OrderSummary() {
           <span>Discount (-20%)</span>
           <span>-${discount.toFixed(2)}</span>
         </div>
-        {cartData.length > 0 && (
+        {state.cartData.length > 0 && (
           <div className="flex justify-between">
             <span className="text-gray-600">Delivery Fee</span>
             <span className="font-medium">${deliveryFee.toFixed(2)}</span>
